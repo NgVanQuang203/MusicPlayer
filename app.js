@@ -15,12 +15,14 @@ const nextBtn = $(".btn-next");
 const prevBtn = $(".btn-prev");
 const randomBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
+const songOld = $(".song");
 
 const app = {
   currentIndex: 0,
   isPlaying: false,
   isRandom: false,
   isRepeat: false,
+
   song: [
     {
       name: "MyLove",
@@ -85,10 +87,11 @@ const app = {
       path: "./assets/music/songs/ThangTuLaLoiNoiDoilyrics.mp3",
     },
   ],
+  songs: [],
   render: function () {
     const htmls = this.song.map((song, index) => {
       return `
-                <div class="song">
+                <div class="song" data-index="${index}">
                 <div class="thumb" style="background-image: url('${song.image}')">
                 </div>
                 <div class="body">
@@ -102,8 +105,10 @@ const app = {
                
             `;
     });
-    $(".playlist").innerHTML = htmls.join("");
+    document.querySelector(".playlist").innerHTML = htmls.join("");
+    this.songs = document.querySelectorAll(".song");
   },
+
   defineProperties: function () {
     Object.defineProperty(this, "CurrentSong", {
       get: function () {
@@ -111,6 +116,7 @@ const app = {
       },
     });
   },
+
   formatTime: function (time) {
     let minutes = Math.floor(time / 60);
     let seconds = Math.floor(time % 60);
@@ -150,6 +156,12 @@ const app = {
         audio.pause();
       } else {
         audio.play();
+        if (_this.currentIndex == _this.getValueIndex(_this.currentIndex)) {
+          _this.songs.forEach((song) => {
+            song.classList.remove("active");
+          });
+          _this.songs[_this.currentIndex].classList.add("active");
+        }
       }
     };
 
@@ -197,57 +209,77 @@ const app = {
         timeLeft.textContent = _this.formatTime(audio.currentTime);
       }
     });
-
     // Click next button
     nextBtn.onclick = function () {
-      if(_this.isRandom) {
+      if (_this.isRandom) {
         _this.playRandomSong();
+      } else {
+        _this.nextSongg();
       }
-      else {_this.nextSongg()}
       audio.play();
+      if (_this.currentIndex == _this.getValueIndex(_this.currentIndex)) {
+        _this.songs.forEach((song) => {
+          song.classList.remove("active");
+        });
+        _this.songs[_this.currentIndex].classList.add("active");
+      }
     };
     prevBtn.onclick = function () {
-      if(_this.isRandom) {
+      if (_this.isRandom) {
         _this.playRandomSong();
+      } else {
+        _this.prevSong();
       }
-      else {_this.prevSong()}
       audio.play();
+      if (_this.currentIndex == _this.getValueIndex(_this.currentIndex)) {
+        _this.songs.forEach((song) => {
+          song.classList.remove("active");
+        });
+        _this.songs[_this.currentIndex].classList.add("active");
+      }
     };
 
     // *Xử lý random
     randomBtn.onclick = function (e) {
-      if(_this.isRepeat) {
+      if (_this.isRepeat) {
         repeatBtn.click();
       }
-        _this.isRandom = !_this.isRandom;
-      randomBtn.classList.toggle('active', _this.isRandom);
-      
-    };  
+      _this.isRandom = !_this.isRandom;
+      randomBtn.classList.toggle("active", _this.isRandom);
+    };
     // Xử lý next song khi end
     audio.onended = function () {
-      if(_this.isRepeat) {
+      if (_this.isRepeat) {
         audio.play();
-      }
-      else {
+      } else {
         nextBtn.click();
       }
     };
-      // Xử lý phát lại 1 bài
+    // Xử lý phát lại 1 bài
     repeatBtn.onclick = function () {
-      if(_this.isRandom){
+      if (_this.isRandom) {
         randomBtn.click();
       }
-       _this.isRepeat = !_this.isRepeat;
-      repeatBtn.classList.toggle('active', _this.isRepeat);
+      _this.isRepeat = !_this.isRepeat;
+      repeatBtn.classList.toggle("active", _this.isRepeat);
+    };
+  },
+  getValueIndex: function (currentIndex) {
+    const songOfIndex = this.songs[currentIndex];
+    console.log(songOfIndex); // Kiểm tra giá trị của songOfIndex
+    if (songOfIndex && songOfIndex.getAttribute) {
+      const valueIndex = songOfIndex.getAttribute("data-index");
+      console.log(valueIndex);
+      return valueIndex;
+    } else {
+      return null; // hoặc giá trị mặc định nếu không tìm thấy phần tử hoặc thuộc tính
     }
-
-
   },
   playRandomSong: function () {
     let newIndex;
-    do{
+    do {
       newIndex = Math.floor(Math.random() * this.song.length);
-    }while(newIndex === this.currentIndex)
+    } while (newIndex === this.currentIndex);
     this.currentIndex = newIndex;
     this.loadCurrentSong();
   },
@@ -283,5 +315,6 @@ const app = {
     this.render();
   },
 };
+
 app.start();
-// 
+//
