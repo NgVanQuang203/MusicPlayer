@@ -13,10 +13,14 @@ const timeLeft = $(".time-left");
 const timeRight = $(".time-right");
 const nextBtn = $(".btn-next");
 const prevBtn = $(".btn-prev");
+const randomBtn = $(".btn-random");
+const repeatBtn = $(".btn-repeat");
 
 const app = {
   currentIndex: 0,
   isPlaying: false,
+  isRandom: false,
+  isRepeat: false,
   song: [
     {
       name: "MyLove",
@@ -82,7 +86,7 @@ const app = {
     },
   ],
   render: function () {
-    const htmls = this.song.map((song) => {
+    const htmls = this.song.map((song, index) => {
       return `
                 <div class="song">
                 <div class="thumb" style="background-image: url('${song.image}')">
@@ -196,15 +200,57 @@ const app = {
 
     // Click next button
     nextBtn.onclick = function () {
-      _this.nextSongg();
+      if(_this.isRandom) {
+        _this.playRandomSong();
+      }
+      else {_this.nextSongg()}
       audio.play();
     };
     prevBtn.onclick = function () {
-      _this.prevSong();
+      if(_this.isRandom) {
+        _this.playRandomSong();
+      }
+      else {_this.prevSong()}
       audio.play();
     };
-  },
 
+    // *Xử lý random
+    randomBtn.onclick = function (e) {
+      if(_this.isRepeat) {
+        repeatBtn.click();
+      }
+        _this.isRandom = !_this.isRandom;
+      randomBtn.classList.toggle('active', _this.isRandom);
+      
+    };  
+    // Xử lý next song khi end
+    audio.onended = function () {
+      if(_this.isRepeat) {
+        audio.play();
+      }
+      else {
+        nextBtn.click();
+      }
+    };
+      // Xử lý phát lại 1 bài
+    repeatBtn.onclick = function () {
+      if(_this.isRandom){
+        randomBtn.click();
+      }
+       _this.isRepeat = !_this.isRepeat;
+      repeatBtn.classList.toggle('active', _this.isRepeat);
+    }
+
+
+  },
+  playRandomSong: function () {
+    let newIndex;
+    do{
+      newIndex = Math.floor(Math.random() * this.song.length);
+    }while(newIndex === this.currentIndex)
+    this.currentIndex = newIndex;
+    this.loadCurrentSong();
+  },
   nextSongg: function () {
     this.currentIndex++;
     if (this.currentIndex > this.song.length - 1) {

@@ -183,6 +183,9 @@ header h2 {
 .song.active {
   background-color: var(--primary-color);
 }
+.btn-random.active:hover{
+  color: #fff;
+}
 .song:active {
   opacity: 0.8;
 }
