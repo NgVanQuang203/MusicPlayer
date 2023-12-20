@@ -3,8 +3,8 @@
   --text-color: #333;
 }
 @font-face {
-  font-family: Poppins;
-  src: url(../font/PoppinsExtralight-6Je1.otf);
+  font-family: Mali;
+  src: url(../font/Mali.ttf);
 }
 * {
   margin: 0;
@@ -17,7 +17,7 @@ body {
 }
 html {
   box-sizing: border-box;
-  font-family: Poppins, "san-serif";
+  font-family: 'Mali';
 }
 .player {
   position: relative;
