@@ -42,14 +42,21 @@ html {
   width: 100%;
   max-width: 480px;
   border-bottom: 1px solid #ebebeb;
+  z-index: 999;
 }
 header {
   text-align: center;
   margin-bottom: 10px;
 }
 header h4 {
-  color: var(--primary-color);
   font-size: 16px;
+  color: var(--primary-color);
+}
+
+header .name-singer {
+  background-image: linear-gradient(to right, #3494e6, #ec6ead) !important;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 header h2 {
   color: #000;
@@ -169,6 +176,8 @@ header h2 {
   padding: 8px 16px;
   border-radius: 5px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .song.active {
@@ -209,4 +218,7 @@ header h2 {
   color: #999;
   padding: 16px 8px;
   font-size: 18px;
+}
+.song:hover {
+  transform: scale(0.98);
 }
