@@ -17,7 +17,7 @@ body {
 }
 html {
   box-sizing: border-box;
-  font-family: 'Mali';
+  font-family: "Mali";
 }
 .player {
   position: relative;
@@ -183,7 +183,7 @@ header h2 {
 .song.active {
   background-color: var(--primary-color);
 }
-.btn-random.active:hover{
+.btn-random.active:hover {
   color: #fff;
 }
 .song:active {
