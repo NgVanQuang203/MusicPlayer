@@ -103,10 +103,7 @@ header h2 {
   cursor: pointer;
 }
 
-.btn:hover {
-  background-color: var(--primary-color);
-  color: #fff;
-}
+
 .btn-toggle-play:hover {
   opacity: 0.6;
 }
@@ -183,10 +180,7 @@ header h2 {
 .song.active {
   background-color: var(--primary-color);
 }
-.btn-random.active:hover,
-.btn-repeat.active:hover {
-  color: #fff;
-}
+
 .song:active {
   opacity: 0.8;
 }
@@ -226,3 +220,20 @@ header h2 {
 .song:hover {
   transform: scale(0.98);
 }
+@media screen and (min-width: 408px) {
+.btn-random.active:hover,
+.btn-repeat.active:hover {
+  color: #fff;
+}
+.btn:hover {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+}
+@media screen and (max-width: 408px) {
+  
+  .btn:active {
+    background-color: var(--primary-color);
+    color: #fff;
+  }
+  }
