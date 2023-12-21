@@ -294,24 +294,34 @@ const app = {
       }
     };
     volumeRange.onchange = function (e) {
-      const sleekVolumn = e.target.value;
-      audio.volume = sleekVolumn / 100;
-      console.log(audio.volume);
+      
+        const sleekVolumn = e.target.value;
+        audio.volume = sleekVolumn / 100;
+        console.log(audio.volume);
+        if(volumeRange.value > 0){
+          volume.classList.remove("active");
+          _this.isVolume = true;
+        }
+        else{
+          volume.classList.add("active");
+          _this.isVolume = false;
+        }
     };
 
     // Xử lý khi click Volume
     volume.onclick = function (e) {
       if(_this.isVolume){
+        
+        volume.classList.add("active");
+        _this.isVolume = false;
+        audio.volume = 0;
+        volumeRange.value = 0;
+      }
+      else {
         volume.classList.remove("active");
         audio.volume = 1;
         volumeRange.value = 100;
-        _this.isVolume = false;
-      }
-      else {
-        volume.classList.add("active");
         _this.isVolume = true;
-        audio.volume = 0;
-        volumeRange.value = 0;
       }
     }
 
