@@ -16,11 +16,17 @@ const prevBtn = $(".btn-prev");
 const randomBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 const playlist = $(".playlist");
+const volume = $(".volume");
+const volumeRange = $(".volume-range");
+
+
+
 const app = {
   currentIndex: 0,
   isPlaying: false,
   isRandom: false,
   isRepeat: false,
+  isVolume: true,
 
   song: [
     {
@@ -287,6 +293,28 @@ const app = {
         }
       }
     };
+    volumeRange.onchange = function (e) {
+      const sleekVolumn = e.target.value;
+      audio.volume = sleekVolumn / 100;
+      console.log(audio.volume);
+    };
+
+    // Xử lý khi click Volume
+    volume.onclick = function (e) {
+      if(_this.isVolume){
+        volume.classList.remove("active");
+        audio.volume = 1;
+        volumeRange.value = 100;
+        _this.isVolume = false;
+      }
+      else {
+        volume.classList.add("active");
+        _this.isVolume = true;
+        audio.volume = 0;
+        volumeRange.value = 0;
+      }
+    }
+
   },
   getValueIndex: function (currentIndex) {
     const songOfIndex = this.songs[currentIndex];

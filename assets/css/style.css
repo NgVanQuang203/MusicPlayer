@@ -63,6 +63,29 @@ header h2 {
   font-size: 24px;
   transition: all 0.3 ease;
 }
+.accessibility{
+  display: flex;
+  justify-items: center;
+  margin: 5px 0;
+}
+.volume i{
+  font-size: 18px;
+}
+
+.volume-range{
+  width: 100px;
+  transition: all 0.3s ease;
+  opacity: 1;
+}
+.volume .OffVolume{
+  display: none;
+}
+.volume.active .OffVolume{
+  display: inline-block;
+}
+.volume.active .OnVolume{
+    display: none;
+}
 
 .cd {
   display: flex;
