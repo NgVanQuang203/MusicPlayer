@@ -396,7 +396,7 @@ const app = {
     const render = document.querySelector(".song-" + index);
     if(render){
       this.song.splice(index, 1);
-      render.remove();
+      this.render();
     }
     this.loadCurrentSong();
   },
