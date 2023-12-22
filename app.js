@@ -512,9 +512,16 @@ const app = {
       toastParent.appendChild(toastChild);
     }
   },
+  detectDevices: function(){
+    if(navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i)){
+      volume.style.display = 'none';
+    }
+    
+  },
   start: function () {
     // Định nghĩa
     this.loadConfig();
+    this.detectDevices();
     this.defineProperties();
     this.handleEvents();
     this.loadCurrentSong();
