@@ -336,7 +336,14 @@ const app = {
         handleClick(Number(downloadSong.dataset.index));
         downloadSong.href = _this.CurrentSong.path;
         downloadSong.download = `${_this.CurrentSong.name} - ${_this.CurrentSong.singer}.mp3`;
-        
+        setTimeout(function(){
+          _this.toastMessage([
+            title = 'Tải xuống thành công!',
+            message = 'Hãy kiểm tra trong thư mục download của bạn',
+            type = 'success',
+            duration = 3000
+          ])
+        }, 3000);
       }
       if(deleteSong){
         const indexDelete = Number(deleteSong.dataset.index);
@@ -448,7 +455,51 @@ const app = {
     cdThumb.style.backgroundImage = `url('${this.CurrentSong.image}')`;
     audio.src = this.CurrentSong.path;
   },
+  // Toast Message
+  toastMessage: function ([
+      title = '',
+      message ='',
+      type= '',
+      duration = 2000
+    ]){
+    const toastParent = document.querySelector('#toast');
+    if(toastParent) {
+      const toastChild = document.createElement('div');
+      const autoremoveToast = setTimeout(function () {
+        toastParent.removeChild(toastChild);
+      }, duration + 1000);
+      const icons ={
+        success: 'fa-regular fa-circle-check',
+        error: 'fa-solid fa-circle-exclamation'
+      }
+      const icon = icons[type];
+      const delay = (duration / 1000).toFixed(2);
 
+      toastChild.classList.add('toast', `toast-${type}`);
+      toastChild.style.animation = `slideInLeft ease 0.3s, fadeOut linear 1s ${delay}s forwards`;
+
+      toastChild.innerHTML = `
+        <div class="toast_icon">
+          <i class="${icon}"></i>
+        </div>
+        <div class="toast_body">
+        <h3 class="toast_title">${title}</h3>
+        <p class="toast_message toast-${type}">${message}</p>
+        </div>
+        <div class="toast_close">
+        <i class="fa-solid fa-xmark"></i>
+        </div>
+      `
+      toastChild.addEventListener('click', function(e){
+        const closeNode = e.target.closest('.toast_close');
+        if(closeNode){
+          toastParent.removeChild(toastChild);
+        }
+        clearTimeout(autoremoveToast);
+      });
+      toastParent.appendChild(toastChild);
+    }
+  },
   start: function () {
     // Định nghĩa
     this.loadConfig();
