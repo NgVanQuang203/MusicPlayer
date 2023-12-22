@@ -1,6 +1,8 @@
 const $ = document.querySelector.bind(document);
 const $$ = document.querySelectorAll.bind(document);
 
+const PLAYER_STORAGE_KEY = 'Quang_Mucsic';
+
 const cd = $(".cd");
 const heading = $(".infor h2");
 const nameSinger = $("header .name-singer");
@@ -28,7 +30,12 @@ const app = {
   isRandom: false,
   isRepeat: false,
   isVolume: true,
-
+  config:
+    JSON.parse(localStorage.getItem(PLAYER_STORAGE_KEY,)) || {},
+  setConfig: function(key, value) {
+    this.config[key] = value;
+    localStorage.setItem(PLAYER_STORAGE_KEY, JSON.stringify(this.config));
+  },
   song: [
     {
       name: "MyLove",
@@ -270,8 +277,10 @@ const app = {
       if (_this.isRepeat) {
         repeatBtn.click();
       }
+      
       _this.isRandom = !_this.isRandom;
       randomBtn.classList.toggle("active", _this.isRandom);
+      _this.setConfig('isRandom', _this.isRandom);
     };
     // Xử lý next song khi end
     audio.onended = function () {
@@ -286,8 +295,11 @@ const app = {
       if (_this.isRandom) {
         randomBtn.click();
       }
+      
       _this.isRepeat = !_this.isRepeat;
       repeatBtn.classList.toggle("active", _this.isRepeat);
+      _this.setConfig('isRepeat', _this.isRepeat);
+      
     };
     // Click Song, Option, Delete Song
     playlist.onclick = function (e) {
@@ -375,6 +387,10 @@ const app = {
   
 
   },
+  loadConfig: function(){
+    this.isRandom = this.config.isRandom;
+    this.isRepeat = this.config.isRepeat;
+  },
   removeSong: function(index){
     
     const render = document.querySelector(".song-" + index);
@@ -435,12 +451,13 @@ const app = {
 
   start: function () {
     // Định nghĩa
-
+    this.loadConfig();
     this.defineProperties();
     this.handleEvents();
     this.loadCurrentSong();
     this.render();
-    
+    repeatBtn.classList.toggle("active", this.isRepeat);
+    randomBtn.classList.toggle("active", this.isRandom);
   },
 };
 
