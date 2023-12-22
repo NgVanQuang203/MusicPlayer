@@ -92,6 +92,12 @@ const app = {
       image: "./assets/music/img/R.png",
       path: "./assets/music/songs/ThangTuLaLoiNoiDoilyrics.mp3",
     },
+    {
+      name: "Hoàng Hôn Tháng 8",
+      singer: "Hà Anh Tuấn",
+      image: "./assets/music/img/1641280778689_500.jpg",
+      path: "./assets/music/songs/HoangHonThangTam-HaAnhTuan-5166364.mp3",
+    },
   ],
   songs: [],
   render: function () {
@@ -308,6 +314,7 @@ const app = {
       {
         if(songnode){
           handleClick(Number(songnode.dataset.index));
+          
         }
       }
       if(option){

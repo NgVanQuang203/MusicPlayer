@@ -257,6 +257,10 @@ header h2 {
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
 
+.song.active .option{
+  background-color: #fff;
+  color: #333;
+}
 .song:hover {
   transform: scale(0.98);
 }
