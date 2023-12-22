@@ -103,7 +103,7 @@ const app = {
   render: function () {
     const htmls = this.song.map((song, index) => {
       return `
-                <div class="song" data-index="${index}">
+                <div class="song song-${index}" data-index="${index}">
                 <div class="thumb" style="background-image: url('${song.image}')">
                 </div>
                 <div class="body">
@@ -289,7 +289,7 @@ const app = {
       _this.isRepeat = !_this.isRepeat;
       repeatBtn.classList.toggle("active", _this.isRepeat);
     };
-    // Click Song
+    // Click Song, Option, Delete Song
     playlist.onclick = function (e) {
       const songnode = e.target.closest('.song:not(.active)');
       const option = e.target.closest('.option');
@@ -324,6 +324,17 @@ const app = {
         handleClick(Number(downloadSong.dataset.index));
         downloadSong.href = _this.CurrentSong.path;
         downloadSong.download = `${_this.CurrentSong.name} - ${_this.CurrentSong.singer}.mp3`;
+        
+      }
+      if(deleteSong){
+        const indexDelete = Number(deleteSong.dataset.index);
+        if(_this.isPlaying){
+          return ;
+        }
+        if(_this.song.length < 1){
+          return ;
+        }
+        _this.removeSong(indexDelete);
         
       }
     };
@@ -363,6 +374,15 @@ const app = {
     // Xử lý khi click vào Option
   
 
+  },
+  removeSong: function(index){
+    
+    const render = document.querySelector(".song-" + index);
+    if(render){
+      this.song.splice(index, 1);
+      render.remove();
+    }
+    this.loadCurrentSong();
   },
   getValueIndex: function (currentIndex) {
     const songOfIndex = this.songs[currentIndex];
