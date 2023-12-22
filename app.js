@@ -16,9 +16,10 @@ const prevBtn = $(".btn-prev");
 const randomBtn = $(".btn-random");
 const repeatBtn = $(".btn-repeat");
 const playlist = $(".playlist");
+const volumeOnOff = $(".volumeOnOff");
 const volume = $(".volume");
 const volumeRange = $(".volume-range");
-
+const options = $$(".song .option");
 
 
 const app = {
@@ -104,8 +105,18 @@ const app = {
                     <p class="author">${song.singer}</p>
                 </div>
                 <div class="option">
-                    <i class="fa-solid fa-ellipsis-vertical"></i>
-                </div>
+                    <i class="fa-solid  fa-ellipsis-vertical"></i>
+                    <div class="option-child">
+                      <a class="download" href download data-index="${index}">
+                      <i class="fa-solid fa-download"></i>
+                      Tải Xuống
+                      </a>
+                      <a class="delete" data-index="${index}">
+                      <i class="fa-solid fa-trash"></i>
+                        Xóa khỏi danh sách
+                      </a>
+                    </div>
+                    </div>
                 </div> 
                
             `;
@@ -275,24 +286,42 @@ const app = {
     // Click Song
     playlist.onclick = function (e) {
       const songnode = e.target.closest('.song:not(.active)');
-      if(songnode && !e.target.closest('.option'))
+      const option = e.target.closest('.option');
+      const optionChild = e.target.closest('.option-child');
+      const downloadSong = e.target.closest('.download')
+      const deleteSong = e.target.closest('.delete')
+
+      const handleClick = (index)=>{
+        _this.currentIndex = index;
+        _this.loadCurrentSong();
+        // Active Song
+        if (_this.currentIndex == _this.getValueIndex(_this.currentIndex)) {
+          _this.songs.forEach((song) => {
+            song.classList.remove("active");
+          });
+          _this.songs[_this.currentIndex].classList.add("active");
+        }
+        _this.ScrollActiveSong();
+        audio.play();
+      }
+      if(songnode && !option)
       {
         if(songnode){
-          _this.currentIndex = songnode.dataset.index;
-          _this.loadCurrentSong();
-          audio.play();
-          if (_this.currentIndex == _this.getValueIndex(_this.currentIndex)) {
-            _this.songs.forEach((song) => {
-              song.classList.remove("active");
-            });
-            _this.songs[_this.currentIndex].classList.add("active");
-          }
-        }
-        if(e.target.closest('.option')){
-
+          handleClick(Number(songnode.dataset.index));
         }
       }
+      if(option){
+        option.classList.toggle("active");
+      }
+      if(downloadSong){
+        handleClick(Number(downloadSong.dataset.index));
+        downloadSong.href = _this.CurrentSong.path;
+        downloadSong.download = `${_this.CurrentSong.name} - ${_this.CurrentSong.singer}.mp3`;
+        
+      }
     };
+   
+
     volumeRange.onchange = function (e) {
       
         const sleekVolumn = e.target.value;
@@ -309,21 +338,23 @@ const app = {
     };
 
     // Xử lý khi click Volume
-    volume.onclick = function (e) {
+    volumeOnOff.onclick = function (e) {
       if(_this.isVolume){
-        
+        volumeRange.value = 0;
+        audio.volume = 0;
         volume.classList.add("active");
         _this.isVolume = false;
-        audio.volume = 0;
-        volumeRange.value = 0;
+
       }
       else {
         volume.classList.remove("active");
-        audio.volume = 1;
         volumeRange.value = 100;
+        audio.volume= 1;
         _this.isVolume = true;
       }
-    }
+    };
+    // Xử lý khi click vào Option
+  
 
   },
   getValueIndex: function (currentIndex) {

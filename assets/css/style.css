@@ -68,18 +68,21 @@ header h2 {
   justify-items: center;
   margin: 5px 0;
 }
+.volume{
+  display: flex;
+}
 .volume i{
   font-size: 18px;
 }
 
-.volume:hover ~ .volume-range{
-  opacity: 1;
+.volume:hover .volume-range{
+  visibility: visible ;
 }
 
 .volume-range{
   width: 100px;
-  transition: all 0.3s ease;
-
+  transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+  visibility: hidden;
 }
 .volume .OffVolume{
   display: none;
@@ -240,13 +243,57 @@ header h2 {
   color: #999;
 }
 .song .option {
+  position: relative;
   color: #999;
   padding: 16px 8px;
   font-size: 18px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
 }
+
 .song:hover {
   transform: scale(0.98);
 }
+/* OptionChild */
+.option .option-child {
+  position: absolute;
+  display: none;
+  min-width: 200px;
+  right: 120%;
+  top: 50%;
+  padding: 12px;
+  background-color: #fff;
+  border-radius: 8px;
+  z-index: 1;
+  transform: translateY(-50%);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.3);
+}
+.option.active .option-child{
+  display: block;
+}
+.option .option-child a:first-child{
+  margin-bottom: 12px;
+}
+.option .option-child a{
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease-in-out;
+  user-select: none;
+  color: var(--text-color);
+  text-decoration: none;
+
+}
+
+
+
+
 @media screen and (min-width: 408px) {
 .btn-random.active:hover,
 .btn-repeat.active:hover {
@@ -256,10 +303,18 @@ header h2 {
   background-color: var(--primary-color);
   color: #fff;
 }
+.song .option:hover{
+  background-color: var(--primary-color);
+  color: #fff;
+}
 }
 @media screen and (max-width: 408px) {
   
   .btn:active {
+    background-color: var(--primary-color);
+    color: #fff;
+  }
+  .song .option:active{
     background-color: var(--primary-color);
     color: #fff;
   }
