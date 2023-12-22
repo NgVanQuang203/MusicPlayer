@@ -294,6 +294,12 @@ header h2 {
   text-decoration: none;
 
 }
+.option .option-child a i{
+  margin-right: 10px;
+}
+.option .option-child a:hover{
+  color: var(--primary-color);
+}
 /* Toast Message */
 #toast{
   position: fixed;
