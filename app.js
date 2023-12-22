@@ -348,9 +348,21 @@ const app = {
       if(deleteSong){
         const indexDelete = Number(deleteSong.dataset.index);
         if(_this.isPlaying){
+          _this.toastMessage([
+            title = 'Thất Bại!',
+            message = 'Trình phát nhạc đang chạy. Vui lòng tắt đi để xóa bài hát!',
+            type = 'error',
+            duration = 3000
+          ]);
           return ;
         }
-        if(_this.song.length < 1){
+        if(_this.song.length <= 1){
+          _this.toastMessage([
+            title = 'Thất Bại!',
+            message = 'Không thể xóa bài hát cuối cùng!',
+            type = 'error',
+            duration = 3000
+          ]);
           return ;
         }
         _this.removeSong(indexDelete);
