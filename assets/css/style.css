@@ -33,6 +33,66 @@ html {
 .player.playing .icon-play {
   display: none;
 }
+.player .popup-confirm{
+  position: fixed;
+  display: none;
+  transition: all 0.4s ease-in-out;
+  z-index: 9999;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 5px;
+  user-select: none;
+  min-width: 300px;
+  max-width: 400px;
+  background-color: #f2f2f2;
+  text-align: center;
+  align-items: center;
+  padding: 40px;
+  border: 1px solid #b3b3b3;
+  box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.3);
+}
+.popup-confirm i{
+  font-size: 60px;
+  color: #eb9447;
+  padding: 10px 40px;
+  margin: -10px 0 20px 0;
+}
+.popup-confirm h1{
+  font-size: 30px;
+  color: #1b3621;
+  margin-bottom: 5px;
+}
+.popup-confirm label{
+  font-size: 23px;
+  color: #404040;  
+}
+.popup-confirm .btns{
+  margin: 40px 0 0 0;
+  display: flex;
+  justify-content: space-around;
+}
+.btns .btnAgree,
+.btns .btnCancel{
+  background-color: #999999;
+  color: white;
+  font-size: 18px;
+  padding: 10px 13px;
+  border: 1px solid #808080;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.btns .btnAgree{
+  background: #ff3333;
+  margin-left: 20px;
+  border: 1px solid #cc0000;
+}
+.btns .btnAgree:hover,
+.btns .btnCancel:hover{
+  text-decoration: underline;
+  opacity: 0.7;
+}
 
 .dashboard {
   padding: 16px 16px 14px;
@@ -410,5 +470,13 @@ header h2 {
   .song .option:active{
     background-color: var(--primary-color);
     color: #fff;
+  }
+  #toast{
+    right: 0;
+  }
+  .toast{
+    min-width: 300px;
+    max-width: 450px;
+    min-height: 100px;
   }
   }

@@ -24,6 +24,7 @@ const volumeRange = $(".volume-range");
 const options = $$(".song .option");
 
 
+
 const app = {
   currentIndex: 0,
   isPlaying: false,
@@ -308,6 +309,7 @@ const app = {
       const optionChild = e.target.closest('.option-child');
       const downloadSong = e.target.closest('.download')
       const deleteSong = e.target.closest('.delete')
+      const popUp_Confirm = $('.player .popup-confirm');
 
       const handleClick = (index)=>{
         _this.currentIndex = index;
@@ -345,6 +347,7 @@ const app = {
           ])
         }, 3000);
       }
+
       if(deleteSong){
         const indexDelete = Number(deleteSong.dataset.index);
         if(_this.isPlaying){
@@ -365,7 +368,15 @@ const app = {
           ]);
           return ;
         }
-        _this.removeSong(indexDelete);
+        popUp_Confirm.style.display = 'block';
+        $('.btnAgree').onclick = function(){
+          _this.removeSong(indexDelete);
+          popUp_Confirm.style.display = 'none';
+        }
+        $('.btnCancel').onclick = function(){
+          popUp_Confirm.style.display = 'none';
+        }
+        
         
       }
     };
