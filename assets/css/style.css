@@ -2,6 +2,7 @@
   --primary-color: #ec1f55;
   --text-color: #333;
 }
+
 @font-face {
   font-family: Mali;
   src: url(../font/Mali.ttf);
